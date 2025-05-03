@@ -1,0 +1,25 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { LoginComponent } from './ctx-auth/pages/login/login.component';
+import { SignUpComponent } from './ctx-auth/pages/sign-up/sign-up.component';
+import { AppLayout } from './ctx-layout/layout/component/app.layout.component';
+import { NotFoundComponent } from './ctx-layout/pages/notfound/notfound.component';
+
+export const routes: Routes = [
+    {
+        path: '',
+        component: AppLayout,
+        children: []
+    },
+    { path: 'login', component: LoginComponent },
+    { path: 'sign-up', component: SignUpComponent },
+    { path: 'notfound', component: NotFoundComponent },
+    { path: '**', redirectTo: '/notfound' }
+];
+
+@NgModule({
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
+})
+export class AppRoutingModule {}
