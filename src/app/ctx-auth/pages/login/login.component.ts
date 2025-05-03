@@ -8,6 +8,7 @@ import { AuthService, LoginRequest } from '../../../api/auth';
 import { ReactiveFormAbstract } from '../../../libraries/abstracts';
 import { LayoutService } from '../../../ctx-layout/layout/service/layout.service';
 import { LoadingService } from '../../../ctx-layout/layout/service/loading.service';
+import { NotificationType } from '../../../libraries/enums';
 
 @Component({
     selector: 'app-auth-login',
@@ -40,13 +41,21 @@ export class LoginComponent extends ReactiveFormAbstract implements OnInit {
             return;
         }
 
+        this.block('Logando...');
+
         const request: LoginRequest = {
             email: this.form.value.email,
             password: this.form.value.password
         };
 
         this.authService.login(request).subscribe(() => {
+            this.unlock();
+            this.notify(NotificationType.SUCCESS, 'Usuário logado com sucesso.');
             this.router.navigateByUrl('/');
+        },
+        (error) => {
+            this.unlock();
+            this.notify(NotificationType.ERROR, error.message);
         });
     }
 

@@ -17,7 +17,7 @@ export class AuthService {
     constructor(private http: HttpClient) {}
 
     public login(request: LoginRequest) {
-        return this.http.post<any>(`${this.url}/users/login`, { ...request }).pipe(
+        return this.http.post<any>(`${this.url}/token/`, { ...request }).pipe(
             map((o) => {
                 this.setSession(o);
             })
@@ -25,13 +25,13 @@ export class AuthService {
     }
 
     public signup(request: SignupRequest) {
-        return this.http.post<any>(`${this.url}/users/signup`, { ...request })
+        return this.http.post<any>(`${this.url}/users/`, { ...request })
     }
 
     private setSession(authResult: any) {
         const expiresAt = moment().add(authResult.expiresIn, 'second');
 
-        localStorage.setItem('access_token', authResult.access_token);
+        localStorage.setItem('access_token', authResult.access);
         localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
     }
 
@@ -41,7 +41,9 @@ export class AuthService {
     }
 
     public isLoggedIn() {
-        return moment().isBefore(this.getExpiration());
+        const access_token = localStorage.getItem('access_token');
+
+        return access_token != null && access_token != undefined;
     }
 
     isLoggedOut() {

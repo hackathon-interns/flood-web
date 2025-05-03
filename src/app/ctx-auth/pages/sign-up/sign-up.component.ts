@@ -2,13 +2,14 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { AuthService } from '../../../api/auth';
+import { MessageService } from 'primeng/api';
+
+import { AuthService, LoginRequest } from '../../../api/auth';
+import { NotificationType } from '../../../libraries/enums';
 import { ReactiveFormAbstract } from '../../../libraries/abstracts';
 import { SignupRequest } from '../../../api/auth/requests/signup-request';
 import { LayoutService } from '../../../ctx-layout/layout/service/layout.service';
-import { MessageService } from 'primeng/api';
 import { LoadingService } from '../../../ctx-layout/layout/service/loading.service';
-import { NotificationType } from '../../../libraries/enums';
 
 @Component({
     selector: 'app-auth-sign-up',
@@ -46,19 +47,38 @@ export class SignUpComponent extends ReactiveFormAbstract implements OnInit {
             return;
         }
 
-        this.block();
+        this.block('Criando Conta...');
         const request: SignupRequest = {
             username: this.form.value.username,
+            email: this.form.value.email,
             password: this.form.value.password,
-            email: this.form.value.password,
-            profile_img: this.form.value.password,
-            notify_on_new_station: this.form.value.password,
+            notify_on_new_station: false
         };
 
         this.authService.signup(request).subscribe(
+            (res) => {
+                this.unlock();
+                this.notify(NotificationType.SUCCESS, 'Usuário cadastrado com sucesso.');
+                const loginRequest: LoginRequest = {
+                    email: res.email,
+                    password: this.form.value.password
+                };
+                this.login(loginRequest);
+            },
+            (error) => {
+                this.unlock();
+                this.notify(NotificationType.ERROR, error.message);
+            }
+        );
+    }
+
+    private login(request: LoginRequest) {
+        this.block('Logando...');
+        this.authService.login(request).subscribe(
             () => {
                 this.unlock();
-                this.router.navigateByUrl('/login');
+                this.notify(NotificationType.SUCCESS, 'Usuário logado com sucesso.');
+                this.router.navigateByUrl('/');
             },
             (error) => {
                 this.unlock();
@@ -70,6 +90,7 @@ export class SignUpComponent extends ReactiveFormAbstract implements OnInit {
     private criarFormulario(): void {
         this.form = this.formBuilder.group({
             username: [null, Validators.required],
+            email: [null, Validators.required],
             password: [null, Validators.required],
             confirmationPassword: [null, Validators.required]
         });
@@ -78,6 +99,9 @@ export class SignUpComponent extends ReactiveFormAbstract implements OnInit {
     private atualizarMensagensValidacao(): void {
         super.setValidationMessages({
             username: {
+                required: 'Informe o Nome de usuário'
+            },
+            email: {
                 required: 'Informe o E-mail'
             },
             password: {
