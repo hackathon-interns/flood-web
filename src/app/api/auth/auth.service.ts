@@ -17,7 +17,7 @@ export class AuthService {
     constructor(private http: HttpClient) {}
 
     public login(request: LoginRequest) {
-        return this.http.post<any>(`${this.url}/public/users/login`, { ...request }).pipe(
+        return this.http.post<any>(`${this.url}/users/login`, { ...request }).pipe(
             map((o) => {
                 this.setSession(o);
             })
@@ -25,7 +25,7 @@ export class AuthService {
     }
 
     public signup(request: SignupRequest) {
-        return this.http.post<any>(`${this.url}/public/users/signup`, { ...request })
+        return this.http.post<any>(`${this.url}/users/signup`, { ...request })
     }
 
     private setSession(authResult: any) {

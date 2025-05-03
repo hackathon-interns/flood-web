@@ -15,12 +15,13 @@ import { AppRoutingModule, routes } from './app-routing.module';
 import { AuthModule } from './ctx-auth/auth.module';
 import { LibrariesModule } from './libraries/libraries.module';
 import { AuthInterceptor } from './api/http-interceptors';
+import { MapModule } from './ctx-map/map.module';
 
 const components = [AppComponent];
 
 const foreignModules = [BrowserModule, FormsModule];
 
-const localModules = [AppRoutingModule, LayoutModule, AuthModule, PrimeNGModule, LibrariesModule];
+const localModules = [AppRoutingModule, LayoutModule, AuthModule, PrimeNGModule, LibrariesModule, MapModule];
 
 @NgModule({
     declarations: [...components],

@@ -1,4 +1,3 @@
 export const environment = {
-    // TODO :: Colocar url da api
-    apiUrl: '',
+    apiUrl: 'http://localhost:8000',
 };
