@@ -1,0 +1,15 @@
+<p-dialog [(visible)]="visible" maximizable="true" draggable="false" (onHide)="onHide()" [style]="{ width: '80vw', height: '100vh' }" [header]="titulo" [modal]="true">
+    <ng-template #content>
+        <form [formGroup]="form">
+            <div class="grid">
+
+            </div>
+        </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="w-full flex justify-between items-center gap-2">
+            <p-button severity="secondary" (onClick)="onClickCancelar()" pRipple>Cancelar</p-button>
+            <p-button severity="primary" (onClick)="onClickSalvar()" pRipple>Salvar</p-button>
+        </div>
+    </ng-template>
+</p-dialog>

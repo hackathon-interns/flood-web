@@ -41,7 +41,7 @@ export class LoginComponent extends ReactiveFormAbstract implements OnInit {
         }
 
         const request: LoginRequest = {
-            username: this.form.value.email,
+            email: this.form.value.email,
             password: this.form.value.password
         };
 

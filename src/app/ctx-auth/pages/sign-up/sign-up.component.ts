@@ -50,9 +50,9 @@ export class SignUpComponent extends ReactiveFormAbstract implements OnInit {
         const request: SignupRequest = {
             username: this.form.value.username,
             password: this.form.value.password,
-            role: 'TEACHER'
-            // TODO :: Definir como será diferenciado no cadadastro
-            // role: 'TEACHER' || 'STUDENT'
+            email: this.form.value.password,
+            profile_img: this.form.value.password,
+            notify_on_new_station: this.form.value.password,
         };
 
         this.authService.signup(request).subscribe(

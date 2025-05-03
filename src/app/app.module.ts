@@ -16,12 +16,13 @@ import { AuthModule } from './ctx-auth/auth.module';
 import { LibrariesModule } from './libraries/libraries.module';
 import { AuthInterceptor } from './api/http-interceptors';
 import { MapModule } from './ctx-map/map.module';
+import { DevicesModule } from './ctx-devices/devices.module';
 
 const components = [AppComponent];
 
 const foreignModules = [BrowserModule, FormsModule];
 
-const localModules = [AppRoutingModule, LayoutModule, AuthModule, PrimeNGModule, LibrariesModule, MapModule];
+const localModules = [AppRoutingModule, LayoutModule, AuthModule, PrimeNGModule, LibrariesModule, MapModule, DevicesModule];
 
 @NgModule({
     declarations: [...components],

@@ -6,13 +6,15 @@ import { SignUpComponent } from './ctx-auth/pages/sign-up/sign-up.component';
 import { AppLayout } from './ctx-layout/layout/component/app.layout.component';
 import { MainMapComponent } from './ctx-map/pages/main-map/main-map.component';
 import { NotFoundComponent } from './ctx-layout/pages/notfound/notfound.component';
+import { ListarDevicesComponent } from './ctx-devices/pages';
 
 export const routes: Routes = [
     {
         path: '',
         component: AppLayout,
         children: [
-            { path: 'home', component: MainMapComponent }
+            { path: 'map', component: MainMapComponent },
+            { path: 'devices', component: ListarDevicesComponent }
         ]
     },
     { path: 'login', component: LoginComponent },

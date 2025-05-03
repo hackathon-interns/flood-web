@@ -1,5 +1,7 @@
 export interface SignupRequest {
     username: string;
     password: string;
-    role: string;
+    email: string;
+    profile_img: string;
+    notify_on_new_station: boolean;
 }

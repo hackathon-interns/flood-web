@@ -27,16 +27,12 @@ export class AppMenu {
     carregarItensMenu(): void {
         this.model = [
             {
-                label: 'Dashboards',
+                label: '',
                 items: [
-                    {label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/home']},
-                ]
-            },
-            {
-                label: 'Auth',
-                items: [
-                    {label: 'Login', icon: 'pi pi-fw pi-home', routerLink: ['/login']},
-                    {label: 'Sign Up', icon: 'pi pi-fw pi-home', routerLink: ['/sign-up']}
+                    {label: 'Map', icon: 'pi pi-fw pi-map-marker', routerLink: ['/map']},
+                    {label: 'Devices', icon: 'pi pi-fw pi-cog', routerLink: ['/devices']},
+                    {label: 'Login', icon: 'pi pi-fw pi-cog', routerLink: ['/login']},
+                    {label: 'Signup', icon: 'pi pi-fw pi-cog', routerLink: ['/sign-up']},
                 ]
             },
         ];
