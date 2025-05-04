@@ -74,27 +74,6 @@ export class ListarDevicesComponent extends EntityListAbstract implements OnInit
         this.selectedDevice = null;
     }
 
-    onClickExcluir(Device: Device) {
-        this.selectedDevice = Device;
-        this.excluirVisible = true;
-    }
-
-    onExcluirVisibleEvent(event: any): void {
-        this.excluirVisible = false;
-        this.selectedDevice = null;
-    }
-
-    onExcluirSuccessEvent(event: any): void {
-        this.excluirVisible = false;
-        this.selectedDevice = null;
-        this.onClickAtualizar();
-    }
-
-    onExcluirCancelationEvent(event: any): void {
-        this.excluirVisible = false;
-        this.selectedDevice = null;
-    }
-
     private obterDados(): void {
         this.service.obterTodos().subscribe(
             (res) => {

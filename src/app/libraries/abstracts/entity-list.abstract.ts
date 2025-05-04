@@ -12,7 +12,6 @@ export abstract class EntityListAbstract extends BaseAbstract {
     searchValue: string = '';
     adicionarVisible: boolean = false;
     editarVisible: boolean = false;
-    excluirVisible: boolean = false;
 
     constructor(
         messageService: MessageService,

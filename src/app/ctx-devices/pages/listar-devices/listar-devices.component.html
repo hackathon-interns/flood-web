@@ -11,7 +11,7 @@
 <p-table #dt [value]="devices" [(selection)]="selectedDevices" [rows]="10" [paginator]="true" [globalFilterFields]="['titulo', 'status']" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[10, 20, 50, 100]">
     <ng-template #caption>
         <div class="flex items-center justify-between">
-            <h5 class="m-0">Devices</h5>
+            <h5 class="m-0">Dispositivos</h5>
             <p-iconfield>
                 <p-inputicon styleClass="pi pi-search" />
                 <input [(ngModel)]="searchValue" pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
@@ -24,12 +24,8 @@
                 <p-tableHeaderCheckbox />
             </th>
             <th pSortableColumn="titulo">
-                Título
+                Nome
                 <p-sortIcon field="titulo" />
-            </th>
-            <th pSortableColumn="status">
-                Status
-                <p-sortIcon field="status" />
             </th>
             <th></th>
         </tr>
@@ -39,15 +35,9 @@
             <td style="width: 3rem">
                 <p-tableCheckbox [value]="device" />
             </td>
-            <td>{{ device.title }}</td>
-            <td>
-                <div>
-                    <p-tag [value]="device.status" />
-                </div>
-            </td>
+            <td>{{ device.name }}</td>
             <td class="flex justify-end items-center gap-2">
                 <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="onClickEditar(device)" />
-                <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (onClick)="onClickExcluir(device)" />
             </td>
         </tr>
     </ng-template>
@@ -68,13 +58,4 @@
     (visibleEvent)="onEditarVisibleEvent($event)"
     (successEvent)="onEditarSuccessEvent($event)"
     (cancelationEvent)="onEditarCancelationEvent($event)"
-/>
-
-<ctx-faculdade-excluir-device
-    *ngIf="excluirVisible && selectedDevice"
-    [visible]="excluirVisible"
-    [device]="selectedDevice"
-    (visibleEvent)="onExcluirVisibleEvent($event)"
-    (successEvent)="onExcluirSuccessEvent($event)"
-    (cancelationEvent)="onExcluirCancelationEvent($event)"
 />

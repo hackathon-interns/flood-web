@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Device } from '.';
+import { AdicionarDeviceRequest, Device, EditarDeviceRequest } from '.';
 import { environment } from '../../../environments/environment';
+import { ObterDeviceRequest } from './requests/obter-device-request';
 
 @Injectable({ providedIn: 'root' })
 export class DevicesService {
@@ -12,23 +13,19 @@ export class DevicesService {
 
     constructor(private http: HttpClient) {}
 
-    public adicionar(request: any) {
-        return this.http.post<any>(`${this.url}`, request);
+    public adicionar(request: AdicionarDeviceRequest) {
+        return this.http.post<string>(`${this.url}/`, request);
     }
 
-    public editar(request: any) {
-        return this.http.put<any>(`${this.url}/${request.id}`, request);
+    public editar(request: EditarDeviceRequest) {
+        return this.http.put<string>(`${this.url}/${request.id}/`, request);
     }
 
-    public excluir(request: any) {
-        return this.http.delete<any>(`${this.url}/${request.id}`);
-    }
-
-    public obter(request: any) {
-        return this.http.get<Device>(`${this.url}/${request.id}`);
+    public obter(request: ObterDeviceRequest) {
+        return this.http.get<Device>(`${this.url}/${request.id}/`);
     }
 
     public obterTodos() {
-        return this.http.get<Device[]>(`${this.url}`);
+        return this.http.get<Device[]>(`${this.url}/`);
     }
 }

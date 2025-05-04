@@ -1,13 +1,58 @@
-<p-dialog [(visible)]="visible" maximizable="true" draggable="false" (onHide)="onHide()" [style]="{ width: '80vw', height: '100vh' }" [header]="titulo" [modal]="true">
+<p-dialog [(visible)]="visible" maximizable="true" draggable="false" (onHide)="onHide()" [style]="{ width: '30vw' }" [header]="titulo" [modal]="true">
     <ng-template #content>
-        <form [formGroup]="form">
-            <div class="grid">
-
+        <form [formGroup]="form" novalidate>
+            <div class="formgrid grid">
+                <div class="field col-12">
+                    <input placeholder="Nome do Dispositivo" type="text" formControlName="name" pInputText class="w-full" />
+                </div>
+                <div class="field col-12">
+                    <input placeholder="Identificador" type="text" formControlName="identifier" pInputText class="w-full" />
+                </div>
+                <div class="field col-12 md:col-6">
+                    @if (form.value.front_photo) {
+                        <img [src]="form.value.front_photo" alt="Foto Frontal">
+                    } @else {
+                        <p-fileupload
+                            mode="basic"
+                            name="front_photo"
+                            chooseIcon="pi pi-upload"
+                            accept="image/*"
+                            maxFileSize="1000000"
+                            (onUpload)="onUploadFotoFrontal($event)"
+                            [auto]="true"
+                            chooseLabel="Foto Frontal"
+                            class="w-full"
+                        />
+                    }
+                </div>
+                <div class="field col-12 md:col-6">
+                    @if (form.value.side_photo) {
+                        <img [src]="form.value.side_photo" alt="Foto Lateral">
+                    } @else {
+                        <p-fileupload
+                            mode="basic"
+                            name="side_photo"
+                            chooseIcon="pi pi-upload"
+                            accept="image/*"
+                            maxFileSize="1000000"
+                            (onUpload)="onUploadFotoLateral($event)"
+                            [auto]="true"
+                            chooseLabel="Foto Lateral"
+                            class="w-full"
+                        />
+                    }
+                </div>
+                <div class="field col-12 md:col-6">
+                    <input placeholder="Longitude" type="number" formControlName="longitude" pInputText class="w-full" />
+                </div>
+                <div class="field col-12 md:col-6">
+                    <input placeholder="Latitude" type="number" formControlName="latitude" pInputText class="w-full" />
+                </div>
             </div>
         </form>
     </ng-template>
     <ng-template pTemplate="footer">
-        <div class="w-full flex justify-between items-center gap-2">
+        <div class="w-full flex justify-between gap-2">
             <p-button severity="secondary" (onClick)="onClickCancelar()" pRipple>Cancelar</p-button>
             <p-button severity="primary" (onClick)="onClickSalvar()" pRipple>Salvar</p-button>
         </div>
