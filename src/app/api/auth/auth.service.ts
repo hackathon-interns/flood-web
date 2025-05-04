@@ -55,4 +55,8 @@ export class AuthService {
         const expiresAt = JSON.parse(expiration);
         return moment(expiresAt);
     }
+
+    public getUser() {
+        return this.http.get<any>(`${this.url}/users/me/`)
+    }
 }
