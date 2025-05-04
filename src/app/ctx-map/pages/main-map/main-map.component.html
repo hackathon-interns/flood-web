@@ -1,19 +1,20 @@
 <div>
-    <app-map></app-map>
-    <div>
+    <app-map [layers]="mapLayers"></app-map>
+    <div *ngIf="selectedDevice">
         <p-card>
             <ng-template #title>{{ selectedDevice.name }}</ng-template>
             <div class="grid">
-                <div class="col-12">Endereço: {{ selectedDevice.address }}</div>
+                <div class="col-12">ID: {{ selectedDevice.id }}</div>
                 <div class="col-6">Latitude: {{ selectedDevice.latitude }}</div>
                 <div class="col-6">Longitude: {{ selectedDevice.longitude }}</div>
-                <div class="col-12">Nível da Água: {{ selectedDevice.waterLevelStatus }}</div>
-            </div>
-            <ng-template #footer>
-                <div class="flex gap-4 mt-1">
-                    <p-button label="Close" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
+                <div class="col-12">Status: {{ selectedDevice.status }}</div>
+                <div class="col-12">
+                    <img [src]="selectedDevice.front_photo" alt="Foto Frontal" style="width: 200px; height: 100%; border-radius: 10px;">
                 </div>
-            </ng-template>
+        </div>
         </p-card>
     </div>
+    <div *ngIf="!selectedDevice" class="no-device-flex">
+        <p>Nenhum dispositivo selecionado.</p>
+      </div>
 </div>
