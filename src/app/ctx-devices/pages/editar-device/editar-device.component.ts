@@ -40,24 +40,48 @@ export class EditarDeviceComponent extends ModalBaseAbstract implements OnInit {
         this.notifyCancelation();
     }
 
-    onUploadFotoFrontal(event: UploadEvent) {
-        this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Auto Mode' });
+    onUploadFotoFrontal(event: any) {
+        const file = event.files[0];
+        if (file) {
+            this.form.patchValue({ front_photo: file });
+            this.messageService.add({ 
+                severity: 'info', 
+                summary: 'Sucesso', 
+                detail: 'Imagem Frontal selecionada' 
+            });
+        }
     }
 
-    onUploadFotoLateral(event: UploadEvent) {
-        this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Auto Mode' });
+    onUploadFotoLateral(event: any) {
+        const file = event.files[0];
+        if (file) {
+            this.form.patchValue({ side_photo: file });
+            this.messageService.add({ 
+                severity: 'info', 
+                summary: 'Sucesso', 
+                detail: 'Imagem Lateral selecionada' 
+            });
+        }
+    }
+
+    removeFrontPhoto() {
+        this.form.patchValue({ front_photo: null });
+    }
+
+    removeSidePhoto() {
+        this.form.patchValue({ side_photo: null });
     }
 
     async onClickSalvar(): Promise<void> {
         if (await this.onClientFailed()) {
             return;
         }
-
+        
         this.block('Salvando...');
 
         const request: EditarDeviceRequest = {
             id: this.form.value.id,
-            user: this.form.value.user,
+            user: this.usuarioId,
             name: this.form.value.name,
             identifier: this.form.value.identifier,
             front_photo: this.form.value.front_photo,
@@ -70,7 +94,7 @@ export class EditarDeviceComponent extends ModalBaseAbstract implements OnInit {
             () => {
                 this.unlock();
                 this.notifySuccess(true);
-                this.notify(NotificationType.SUCCESS, 'Device Editado');
+                this.notify(NotificationType.SUCCESS, 'Device Adicionado');
             },
             (error) => {
                 this.unlock();

@@ -14,11 +14,43 @@ export class DevicesService {
     constructor(private http: HttpClient) {}
 
     public adicionar(request: AdicionarDeviceRequest) {
-        return this.http.post<string>(`${this.url}/`, request);
+        const formData = new FormData();
+        
+        // Append all fields to FormData
+        formData.append('user', request.user);
+        formData.append('name', request.name);
+        formData.append('identifier', request.identifier);
+        formData.append('longitude', request.longitude.toString());
+        formData.append('latitude', request.latitude.toString());
+        
+        // Append images if they exist
+        if (request.front_photo) {
+            formData.append('front_photo', request.front_photo);
+        }
+        if (request.side_photo) {
+            formData.append('side_photo', request.side_photo);
+        }
+
+        return this.http.post<string>(`${this.url}/`, formData);
     }
 
     public editar(request: EditarDeviceRequest) {
-        return this.http.put<string>(`${this.url}/${request.id}/`, request);
+        const formData = new FormData();
+        
+        formData.append('user', request.user);
+        formData.append('name', request.name);
+        formData.append('identifier', request.identifier);
+        formData.append('longitude', request.longitude.toString());
+        formData.append('latitude', request.latitude.toString());
+        
+        if (request.front_photo) {
+            formData.append('front_photo', request.front_photo);
+        }
+        if (request.side_photo) {
+            formData.append('side_photo', request.side_photo);
+        }
+
+        return this.http.put<string>(`${this.url}/${request.id}/`, formData);
     }
 
     public obter(request: ObterDeviceRequest) {

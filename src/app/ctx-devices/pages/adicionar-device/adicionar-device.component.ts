@@ -44,24 +44,26 @@ export class AdicionarDeviceComponent extends ModalBaseAbstract implements OnIni
     }
 
     onUploadFotoFrontal(event: any) {
-        const xhr = event.xhr as XMLHttpRequest;
-        const response = JSON.parse(xhr.responseText);
-        const imageUrl = response.url;
-    
-        if (imageUrl) {
-            this.form.patchValue({ front_photo: imageUrl });
-            this.messageService.add({ severity: 'info', summary: 'Sucesso', detail: 'Imagem Frontal adicionada' });
+        const file = event.files[0];
+        if (file) {
+            this.form.patchValue({ front_photo: file });
+            this.messageService.add({ 
+                severity: 'info', 
+                summary: 'Sucesso', 
+                detail: 'Imagem Frontal selecionada' 
+            });
         }
     }
 
     onUploadFotoLateral(event: any) {
-        const xhr = event.xhr as XMLHttpRequest;
-        const response = JSON.parse(xhr.responseText);
-        const imageUrl = response.url;
-    
-        if (imageUrl) {
-            this.form.patchValue({ side_photo: imageUrl });
-            this.messageService.add({ severity: 'info', summary: 'Sucesso', detail: 'Imagem Lateral adicionada' });
+        const file = event.files[0];
+        if (file) {
+            this.form.patchValue({ side_photo: file });
+            this.messageService.add({ 
+                severity: 'info', 
+                summary: 'Sucesso', 
+                detail: 'Imagem Lateral selecionada' 
+            });
         }
     }
     
@@ -125,4 +127,47 @@ export class AdicionarDeviceComponent extends ModalBaseAbstract implements OnIni
         });
     }
     
+    getCurrentLocation(): void {
+        if (!navigator.geolocation) {
+            this.messageService.add({ 
+                severity: 'error', 
+                summary: 'Erro', 
+                detail: 'Geolocalização não suportada pelo navegador' 
+            });
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.form.patchValue({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                });
+                this.messageService.add({ 
+                    severity: 'success', 
+                    summary: 'Sucesso', 
+                    detail: 'Localização atual obtida com sucesso' 
+                });
+            },
+            (error) => {
+                let message = 'Erro ao obter localização';
+                switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                        message = 'Permissão de localização negada';
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        message = 'Informação de localização indisponível';
+                        break;
+                    case error.TIMEOUT:
+                        message = 'Tempo limite excedido ao obter localização';
+                        break;
+                }
+                this.messageService.add({ 
+                    severity: 'error', 
+                    summary: 'Erro', 
+                    detail: message 
+                });
+            }
+        );
+    }
 }

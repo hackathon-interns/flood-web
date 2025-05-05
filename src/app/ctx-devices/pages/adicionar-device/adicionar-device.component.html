@@ -1,4 +1,13 @@
-<p-dialog [(visible)]="visible" maximizable="true" draggable="false" (onHide)="onHide()" [style]="{ width: '30vw' }" [header]="titulo" [modal]="true">
+<p-dialog 
+    [(visible)]="visible" 
+    maximizable="true" 
+    draggable="false" 
+    (onHide)="onHide()" 
+    [style]="{ width: '90vw', maxWidth: '600px' }" 
+    [header]="titulo" 
+    [modal]="true"
+    [breakpoints]="{'960px': '75vw', '640px': '90vw'}"
+>
     <ng-template #content>
         <form [formGroup]="form" novalidate>
             <div class="formgrid grid">
@@ -15,10 +24,9 @@
                         chooseIcon="pi pi-upload"
                         accept="image/*"
                         maxFileSize="1000000"
-                        (onUpload)="onUploadFotoFrontal($event)"
-                        [auto]="true"
+                        (onSelect)="onUploadFotoFrontal($event)"
                         chooseLabel="Foto Frontal"
-                        class="w-full"
+                        styleClass="w-full"
                     />
                 </div>
                 <div class="field col-12 md:col-6">
@@ -28,10 +36,9 @@
                         chooseIcon="pi pi-upload"
                         accept="image/*"
                         maxFileSize="1000000"
-                        (onUpload)="onUploadFotoLateral($event)"
-                        [auto]="true"
+                        (onSelect)="onUploadFotoLateral($event)"
                         chooseLabel="Foto Lateral"
-                        class="w-full"
+                        styleClass="w-full"
                     />
                 </div>
                 <div class="field col-12 md:col-6">
@@ -39,6 +46,9 @@
                 </div>
                 <div class="field col-12 md:col-6">
                     <input placeholder="Latitude" type="number" formControlName="latitude" pInputText class="w-full"/>
+                </div>
+                <div class="field col-12">
+                    <p-button icon="pi pi-map-marker" (onClick)="getCurrentLocation()" label="Usar Localização Atual" class="w-full"></p-button>
                 </div>
             </div>
         </form>
