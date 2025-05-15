@@ -51,7 +51,7 @@ export class AuthService {
 
     private setSession(authResult: any) {
         const decodedToken = this.decodeJwt(authResult.access);
-        const expiresAt = moment().add(decodedToken.exp, 'second');
+        const expiresAt = moment.unix(decodedToken.exp);
 
         localStorage.setItem('access_token', authResult.access);
         localStorage.setItem('refresh_token', authResult.refresh);
