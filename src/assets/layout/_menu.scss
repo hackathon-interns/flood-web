@@ -21,6 +21,7 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
+    height: 90%;
 
     .layout-root-menuitem {
         > .layout-menuitem-root-text {
@@ -157,4 +158,8 @@
 .layout-submenu-enter-active {
     overflow: hidden;
     transition: max-height 1s ease-in-out;
+}
+
+.auth-button {
+    margin-right: 10%;
 }

@@ -18,7 +18,7 @@ import {LayoutService} from '../service/layout.service';
                 <i class="pi pi-bars"></i>
             </button>
             <a class="layout-topbar-logo" routerLink="/">
-                <span>FloodApp</span>
+                <span>Flood Sense</span>
             </a>
         </div>
 
@@ -42,10 +42,6 @@ import {LayoutService} from '../service/layout.service';
                     <app-configurator />
                 </div>
             </div>
-
-            <button class="layout-topbar-menu-button layout-topbar-action" pStyleClass="@next" enterFromClass="hidden" enterActiveClass="animate-scalein" leaveToClass="hidden" leaveActiveClass="animate-fadeout" [hideOnOutsideClick]="true">
-                <i class="pi pi-ellipsis-v"></i>
-            </button>
         </div>
     </div>`
 })

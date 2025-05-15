@@ -36,21 +36,21 @@ export class AdicionarDeviceComponent extends ModalBaseAbstract implements OnIni
     }
 
     onClickCancelar(): void {
-        this.notifyCancelation();
+        this.emitCancelation();
     }
 
     obterUsuario(): void {
-        this.authService.getUser().subscribe(o => this.usuarioId = o.id);
+        this.authService.getUser().subscribe((o) => (this.usuarioId = o.id));
     }
 
     onUploadFotoFrontal(event: any) {
         const file = event.files[0];
         if (file) {
             this.form.patchValue({ front_photo: file });
-            this.messageService.add({ 
-                severity: 'info', 
-                summary: 'Sucesso', 
-                detail: 'Imagem Frontal selecionada' 
+            this.messageService.add({
+                severity: 'info',
+                summary: 'Sucesso',
+                detail: 'Imagem Frontal selecionada'
             });
         }
     }
@@ -59,20 +59,19 @@ export class AdicionarDeviceComponent extends ModalBaseAbstract implements OnIni
         const file = event.files[0];
         if (file) {
             this.form.patchValue({ side_photo: file });
-            this.messageService.add({ 
-                severity: 'info', 
-                summary: 'Sucesso', 
-                detail: 'Imagem Lateral selecionada' 
+            this.messageService.add({
+                severity: 'info',
+                summary: 'Sucesso',
+                detail: 'Imagem Lateral selecionada'
             });
         }
     }
-    
 
     async onClickSalvar(): Promise<void> {
         if (await this.onClientFailed()) {
             return;
         }
-        
+
         this.block('Salvando...');
 
         const request: AdicionarDeviceRequest = {
@@ -88,8 +87,8 @@ export class AdicionarDeviceComponent extends ModalBaseAbstract implements OnIni
         this.service.adicionar(request).subscribe(
             () => {
                 this.unlock();
-                this.notifySuccess(true);
-                this.notify(NotificationType.SUCCESS, 'Device Adicionado');
+                this.emitSucces(true);
+                this.notifySuccess(undefined, 'Dispositivo adicionado com sucesso');
             },
             (error) => {
                 this.unlock();
@@ -126,16 +125,14 @@ export class AdicionarDeviceComponent extends ModalBaseAbstract implements OnIni
             }
         });
     }
-    
+
     getCurrentLocation(): void {
         if (!navigator.geolocation) {
-            this.messageService.add({ 
-                severity: 'error', 
-                summary: 'Erro', 
-                detail: 'Geolocalização não suportada pelo navegador' 
-            });
+            this.notifyError('Erro', 'Geolocalização não suportada pelo navegador');
             return;
         }
+
+        this.block();
 
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -143,11 +140,7 @@ export class AdicionarDeviceComponent extends ModalBaseAbstract implements OnIni
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
                 });
-                this.messageService.add({ 
-                    severity: 'success', 
-                    summary: 'Sucesso', 
-                    detail: 'Localização atual obtida com sucesso' 
-                });
+                this.notifySuccess('Sucesso', 'Localização atual obtida com sucesso');
             },
             (error) => {
                 let message = 'Erro ao obter localização';
@@ -162,11 +155,7 @@ export class AdicionarDeviceComponent extends ModalBaseAbstract implements OnIni
                         message = 'Tempo limite excedido ao obter localização';
                         break;
                 }
-                this.messageService.add({ 
-                    severity: 'error', 
-                    summary: 'Erro', 
-                    detail: message 
-                });
+                this.notifyError('Erro', message);
             }
         );
     }

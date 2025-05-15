@@ -20,12 +20,12 @@ export abstract class ModalBaseAbstract extends ReactiveFormAbstract {
         super(messageService, loadingService, formBuilder,);
     }
 
-    notifySuccess(resultado: any): void {
+    emitSucces(resultado: any): void {
         this.onHide();
         this.successEvent.emit(resultado);
     }
 
-    notifyCancelation(resultado?: any): void {
+    emitCancelation(resultado?: any): void {
         this.onHide();
         this.cancelationEvent.emit(resultado);
     }

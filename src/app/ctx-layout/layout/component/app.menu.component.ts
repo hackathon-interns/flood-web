@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
+import { ButtonModule } from 'primeng/button';
 import { MenuItem, MessageService } from 'primeng/api';
 
 import { AppMenuitem } from './app.menuitem.component';
@@ -13,20 +14,31 @@ import { NotificationType } from '../../../libraries/enums';
 @Component({
     selector: 'app-menu',
     standalone: true,
-    imports: [CommonModule, AppMenuitem, RouterModule],
+    imports: [CommonModule, AppMenuitem, RouterModule, ButtonModule],
     template: `<ul class="layout-menu">
-        <ng-container *ngFor="let item of model; let i = index">
-            <li app-menuitem *ngIf="!item.separator" [item]="item" [index]="i" [root]="true"></li>
-            <li *ngIf="item.separator" class="menu-separator"></li>
-        </ng-container>
-    </ul> `
+            <ng-container *ngFor="let item of model; let i = index">
+                <li app-menuitem *ngIf="!item.separator" [item]="item" [index]="i" [root]="true"></li>
+                <li *ngIf="item.separator" class="menu-separator"></li>
+            </ng-container>
+        </ul>
+        @if (isLoggedIn) {
+            <p-button [style]="{ width: '100%' }" label="Logout" icon="pi pi-sign-out" (onClick)="onClickLogout()" pRipple />
+        } @else {
+            <p-button class="auth-button" [style]="{ width: '45%' }" label="Signup" icon="pi pi-user-plus" (onClick)="onClickSignup()" pRipple />
+            <p-button [style]="{ width: '45%' }" label="Login" icon="pi pi-sign-in" (onClick)="onClickLogin()" pRipple />
+        } `
 })
 export class AppMenu extends BaseAbstract {
     model: MenuItem[] = [];
 
+    get isLoggedIn(): boolean {
+        return this.auth.isLoggedIn();
+    }
+
     constructor(
         messageService: MessageService,
         loadingService: LoadingService,
+        private router: Router,
         private auth: AuthService
     ) {
         super(messageService, loadingService);
@@ -46,31 +58,18 @@ export class AppMenu extends BaseAbstract {
                 ]
             }
         ];
-
-        if (this.auth.isLoggedIn()) {
-            this.model[0].items?.push({ label: 'Logout', icon: 'pi pi-sign-out', command: () => this.logout() });
-            const indexLogin = this.model[0].items?.findIndex((o) => o.label == 'Login');
-            const indexSignup = this.model[0].items?.findIndex((o) => o.label == 'Signup');
-            if (indexLogin && indexLogin > -1) {
-                this.model[0].items?.splice(indexLogin, 1);
-            }
-
-            if (indexSignup && indexSignup > -1) {
-                this.model[0].items?.splice(indexSignup, 1);
-            }
-        } else {
-            this.model[0].items?.push({ label: 'Login', icon: 'pi pi-fw pi-cog', routerLink: ['/login'] }, { label: 'Signup', icon: 'pi pi-fw pi-cog', routerLink: ['/sign-up'] });
-
-            const indexLogout = this.model[0].items?.findIndex((o) => o.label == 'Logout');
-            if (indexLogout && indexLogout > -1) {
-                this.model[0].items?.splice(indexLogout, 1);
-            }
-        }
     }
 
-    private logout(): void {
+    protected onClickSignup(): void {
+        this.router.navigateByUrl('/sign-up');
+    }
+
+    protected onClickLogin(): void {
+        this.router.navigateByUrl('/login');
+    }
+
+    protected onClickLogout(): void {
         this.auth.logout();
         this.carregarItensMenu();
-        this.notify(NotificationType.SUCCESS, 'Usuário deslogado com sucesso.');
     }
 }

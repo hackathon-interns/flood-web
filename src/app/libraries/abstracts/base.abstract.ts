@@ -28,6 +28,22 @@ export abstract class BaseAbstract {
         this.messageService.add({ severity: color, summary: title ?? notificationType, detail: message });
     }
 
+    protected async notifySuccess(title?: string, message?: string): Promise<void> {
+        this.notify(NotificationType.SUCCESS, title, message);
+    }
+
+    protected async notifyError(title?: string, message?: string): Promise<void> {
+        this.notify(NotificationType.ERROR, title, message);
+    }
+
+    protected async notifyWarning(title?: string, message?: string): Promise<void> {
+        this.notify(NotificationType.WARNING, title, message);
+    }
+
+    protected async notifyInfo(title?: string, message?: string): Promise<void> {
+        this.notify(NotificationType.INFO, title, message);
+    }
+
     protected async notifyMultiple(color: string, messages: string[]): Promise<void> {
         await this.unlock();
         const notificationType = color[0].toLocaleUpperCase() + color.slice(1);

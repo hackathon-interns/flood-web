@@ -37,7 +37,7 @@ export class EditarDeviceComponent extends ModalBaseAbstract implements OnInit {
     }
 
     onClickCancelar(): void {
-        this.notifyCancelation();
+        this.emitCancelation();
     }
 
     onUploadFotoFrontal(event: any) {
@@ -93,7 +93,7 @@ export class EditarDeviceComponent extends ModalBaseAbstract implements OnInit {
         this.service.editar(request).subscribe(
             () => {
                 this.unlock();
-                this.notifySuccess(true);
+                this.emitSucces(true);
                 this.notify(NotificationType.SUCCESS, 'Device Adicionado');
             },
             (error) => {
