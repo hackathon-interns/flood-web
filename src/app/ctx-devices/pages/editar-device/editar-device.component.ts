@@ -18,7 +18,6 @@ import { UploadEvent } from 'primeng/fileupload';
 export class EditarDeviceComponent extends ModalBaseAbstract implements OnInit {
     @Input({ required: true }) device!: Device;
     titulo: string = 'Editar Device';
-    usuarioId: string;
 
     constructor(
         protected override messageService: MessageService,
@@ -81,7 +80,7 @@ export class EditarDeviceComponent extends ModalBaseAbstract implements OnInit {
 
         const request: EditarDeviceRequest = {
             id: this.form.value.id,
-            user: this.usuarioId,
+            user: this.device.user,
             name: this.form.value.name,
             identifier: this.form.value.identifier,
             front_photo: this.form.value.front_photo,
@@ -94,11 +93,11 @@ export class EditarDeviceComponent extends ModalBaseAbstract implements OnInit {
             () => {
                 this.unlock();
                 this.emitSucces(true);
-                this.notify(NotificationType.SUCCESS, 'Device Adicionado');
+                this.notifySuccess(undefined, 'Device Atualizado');
             },
             (error) => {
                 this.unlock();
-                this.notify(NotificationType.ERROR, error.message);
+                this.notifyError(undefined, error.message);
             }
         );
     }
