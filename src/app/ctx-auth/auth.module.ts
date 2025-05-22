@@ -5,6 +5,7 @@ import {SignUpComponent} from "./pages/sign-up/sign-up.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {AppFloatingConfigurator} from "../ctx-layout/layout/component/app.floatingconfigurator.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 
 const exports = [
     LoginComponent,
@@ -20,7 +21,8 @@ const imports = [
 
 @NgModule({
     declarations: [
-        ...exports
+        ...exports,
+        AccessDeniedComponent
     ],
     imports: [
         ...imports,
