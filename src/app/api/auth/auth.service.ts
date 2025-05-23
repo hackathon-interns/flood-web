@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { map } from 'rxjs';
+import { map, Observable, throwError } from 'rxjs';
 import moment from 'moment';
 
 import { LoginRequest } from '.';
@@ -38,15 +38,17 @@ export class AuthService {
         return this.http.post<any>(`${this.url}/users/`, { ...request });
     }
 
-    private refreshToken() {
-        const refreshToken = this.getRefreshToken();
-        if (!refreshToken) return;
-
-        return this.http.post<any>(`${this.url}/token/refresh`, { refresh: refreshToken }).pipe(
-            map((o) => {
-                this.setSession(o);
-            })
-        );
+    public refreshToken() {
+    const refreshToken = this.getRefreshToken();
+    if (!refreshToken) {
+        return throwError(() => new Error('No refresh token available'));
+    }
+    return this.http.post<any>(`${this.url}/token/refresh/`, { refresh: refreshToken }).pipe(
+        map((response) => {
+        this.setSession(response);
+        return response;
+        })
+    );
     }
 
     private setSession(authResult: any) {
