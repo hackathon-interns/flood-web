@@ -27,6 +27,7 @@
                 Nome
                 <p-sortIcon field="titulo" />
             </th>
+            <th>Status</th>
             <th></th>
         </tr>
     </ng-template>
@@ -36,8 +37,18 @@
                 <p-tableCheckbox [value]="device" />
             </td>
             <td>{{ device.name }}</td>
+            <td>
+                <p-tag [severity]="canEdit(device) ? 'success' : 'info'"
+                       [value]="canEdit(device) ? 'Adicionado por você' : 'Adicionado por outro usuário'">
+                </p-tag>
+            </td>
             <td class="flex justify-end items-center gap-2">
-                <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="onClickEditar(device)" />
+                <p-button icon="pi pi-pencil" 
+                         class="mr-2" 
+                         [rounded]="true" 
+                         [outlined]="true" 
+                         (onClick)="onClickEditar(device)" 
+                         [disabled]="!canEdit(device)"/>
             </td>
         </tr>
     </ng-template>
