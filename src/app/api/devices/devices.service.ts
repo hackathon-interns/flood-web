@@ -43,10 +43,21 @@ export class DevicesService {
         formData.append('longitude', request.longitude.toString());
         formData.append('latitude', request.latitude.toString());
         
-        if (request.front_photo) {
+        // Trata front_photo
+        if (request.front_photo === null) {
+            // Explicitamente envia null para remover a imagem
+            formData.append('front_photo', '');
+        } else if (request.front_photo && !(typeof request.front_photo === 'string')) {
+            // Envia nova imagem
             formData.append('front_photo', request.front_photo);
         }
-        if (request.side_photo) {
+        
+        // Trata side_photo
+        if (request.side_photo === null) {
+            // Explicitamente envia null para remover a imagem
+            formData.append('side_photo', '');
+        } else if (request.side_photo && !(typeof request.side_photo === 'string')) {
+            // Envia nova imagem
             formData.append('side_photo', request.side_photo);
         }
 
