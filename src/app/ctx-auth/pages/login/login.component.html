@@ -4,39 +4,43 @@
         <div style="border-radius: 38px; padding: 0.3rem; background: linear-gradient(180deg, color-mix(in srgb, var(--primary-color), transparent 60%) 10%, var(--surface-ground) 30%)">
             <div class="w-full shadow-6 bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20 flex flex-col items-center" style="border-radius: 35px; padding-top: 20px; padding-bottom: 20px">
                 <div class="grid text-center" style="width: 100%">
-                    <form autocomplete="off">
+                    <form autocomplete="off" [formGroup]="form">
                         <div class="col text-center pb-2">
-                            <h2>Welcome Back!</h2>
+                            <h2>Bem-vindo de volta!</h2>
                         </div>
-                        <form [formGroup]="form">
-                            <div class="col text-center pb-4">
-                                <p-iconfield>
-                                    <div class="flex" style="flex-direction: column">
-                                        <p-inputicon styleClass="pi pi-user" />
-                                        <input type="text" placeholder="E-mail" formControlName="email" pInputText />
-                                    </div>
-                                </p-iconfield>
-                            </div>
-                            <div class="col text-center pb-4">
-                                <p-iconfield>
-                                    <div class="flex" style="flex-direction: column">
-                                        <p-inputicon styleClass="pi pi-lock" />
-                                        <input type="password" [autofocus]="false" placeholder="Password" formControlName="password" pInputText />
-                                    </div>
-                                </p-iconfield>
-                                <div style="justify-content: end; text-align: end">
-                                    <a href="/">
-                                        <span class="text-xs"><b class="redirect-link">Forgot Your Password?</b></span>
-                                    </a>
+                        <div class="col text-center pb-4">
+                            <p-iconfield>
+                                <div class="flex" style="flex-direction: column">
+                                    <p-inputicon styleClass="pi pi-user" />
+                                    <input type="text" placeholder="E-mail" formControlName="email" pInputText />
                                 </div>
+                            </p-iconfield>
+                        </div>
+
+                        <div class="col text-center pb-4">
+                            <p-iconfield>
+                                <div class="flex" style="flex-direction: column">
+                                    <p-inputicon styleClass="pi pi-lock" />
+                                    <input type="password" [autofocus]="false" placeholder="Senha" formControlName="password" pInputText />
+                                </div>
+                            </p-iconfield>
+                            <div style="justify-content: end; text-align: end">
+                                <a href="/">
+                                    <span class="text-xs">
+                                        <b class="redirect-link">Esqueceu sua senha?</b>
+                                    </span>
+                                </a>
                             </div>
-                            <div class="col text-center pt-4 pb-4">
-                                <p-button class="bg-primary" styleClass="login-button" (click)="onClickLogin()">Login</p-button>
-                            </div>
-                        </form>
+                        </div>
+
+                        <div class="col text-center pt-4 pb-4">
+                            <p-button class="bg-primary" styleClass="login-button" (click)="onClickLogin()"> Entrar </p-button>
+                        </div>
+
                         <div class="col text-center pt-8 font-bold">
                             <p class="text-sm">
-                                Not a member?<a href="/sign-up"><span class="redirect-link"> Register now</span></a>
+                                Ainda não é membro?
+                                <a href="/sign-up"><span class="redirect-link"> Registre-se agora</span></a>
                             </p>
                         </div>
                     </form>

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdicionarDeviceRequest, Device, EditarDeviceRequest } from '.';
 import { environment } from '../../../environments/environment';
 import { ObterDeviceRequest } from './requests/obter-device-request';
+import { DeviceData } from './models/device-data';
 
 @Injectable({ providedIn: 'root' })
 export class DevicesService {
@@ -15,14 +16,14 @@ export class DevicesService {
 
     public adicionar(request: AdicionarDeviceRequest) {
         const formData = new FormData();
-        
+
         // Append all fields to FormData
         formData.append('user', request.user);
         formData.append('name', request.name);
         formData.append('identifier', request.identifier);
         formData.append('longitude', request.longitude.toString());
         formData.append('latitude', request.latitude.toString());
-        
+
         // Append images if they exist
         if (request.front_photo) {
             formData.append('front_photo', request.front_photo);
@@ -36,13 +37,13 @@ export class DevicesService {
 
     public editar(request: EditarDeviceRequest) {
         const formData = new FormData();
-        
+
         formData.append('user', request.user);
         formData.append('name', request.name);
         formData.append('identifier', request.identifier);
         formData.append('longitude', request.longitude.toString());
         formData.append('latitude', request.latitude.toString());
-        
+
         // Trata front_photo
         if (request.front_photo === null) {
             // Explicitamente envia null para remover a imagem
@@ -51,7 +52,7 @@ export class DevicesService {
             // Envia nova imagem
             formData.append('front_photo', request.front_photo);
         }
-        
+
         // Trata side_photo
         if (request.side_photo === null) {
             // Explicitamente envia null para remover a imagem
@@ -70,5 +71,9 @@ export class DevicesService {
 
     public obterTodos() {
         return this.http.get<Device[]>(`${this.url}/`);
+    }
+
+    public obterData(id: string) {
+        return this.http.get<DeviceData>(`${this.url}/${id}/latest_data/`);
     }
 }

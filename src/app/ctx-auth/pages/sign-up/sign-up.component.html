@@ -6,8 +6,9 @@
                 <div class="grid text-center" style="width: 100%">
                     <form [formGroup]="form" autocomplete="off">
                         <div class="col text-center pb-2">
-                            <h2>Create Account</h2>
+                            <h2>Criar Conta</h2>
                         </div>
+
                         <div class="col text-center pb-4">
                             <p-iconfield>
                                 <div class="flex" style="flex-direction: column">
@@ -16,6 +17,7 @@
                                 </div>
                             </p-iconfield>
                         </div>
+
                         <div class="col text-center pb-4">
                             <p-iconfield>
                                 <div class="flex" style="flex-direction: column">
@@ -24,28 +26,33 @@
                                 </div>
                             </p-iconfield>
                         </div>
+
                         <div class="col text-center pb-4">
                             <p-iconfield>
                                 <div class="flex" style="flex-direction: column">
                                     <p-inputicon styleClass="pi pi-lock" />
-                                    <input type="password" placeholder="Password" formControlName="password" pInputText [autofocus]="false" />
+                                    <input type="password" placeholder="Senha" formControlName="password" pInputText [autofocus]="false" />
                                 </div>
                             </p-iconfield>
                         </div>
+
                         <div class="col text-center pb-4">
                             <p-iconfield>
                                 <div class="flex" style="flex-direction: column">
                                     <p-inputicon styleClass="pi pi-lock" />
-                                    <input type="password" placeholder="Confirm Password" formControlName="confirmationPassword" pInputText [autofocus]="false" />
+                                    <input type="password" placeholder="Confirmar Senha" formControlName="confirmationPassword" pInputText [autofocus]="false" />
                                 </div>
                             </p-iconfield>
                         </div>
+
                         <div class="col text-center pt-4 pb-4">
-                            <p-button class="bg-primary" styleClass="login-button" (click)="onClickSignUp()">Create Account</p-button>
+                            <p-button class="bg-primary" styleClass="login-button" (click)="onClickSignUp()"> Criar Conta </p-button>
                         </div>
+
                         <div class="col text-center pt-8">
                             <p class="text-sm font-bold">
-                                    Have an account?<a href="/login"><span class="redirect-link"> Log In</span></a>
+                                Já tem conta?
+                                <a href="/login"><span class="redirect-link"> Entrar</span></a>
                             </p>
                         </div>
                     </form>
